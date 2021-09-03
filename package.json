@@ -1,0 +1,9 @@
+{
+  "name": "quinta-serie",
+  "version": "1.0.0",
+  "description": "discord bot",
+  "main": "index.js",
+  "repository": "https://github.com/williamsumida/quinta-serie",
+  "author": "William <william.h.sumida@gmail.com>",
+  "license": "MIT"
+}
