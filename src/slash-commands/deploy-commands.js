@@ -10,9 +10,7 @@ const { TOKEN, clientId, guildId } = process.env;
 
 const { REST } = pkg;
 
-const commands = [
-  new SlashCommandBuilder().setName("alo").setDescription("Teste"),
-].map((command) => command.toJSON());
+const commands = [teste, echo].map((command) => command.toJSON());
 
 const rest = new REST({ version: 9 }).setToken(TOKEN);
 
@@ -21,7 +19,7 @@ async function deployCommands() {
     await rest.put(Routes.applicationCommands(clientId), {
       body: commands,
     });
-
+    console.log(commands)
     console.log("Successfully registered application commands (Production).");
   } catch (error) {
     console.error(error);

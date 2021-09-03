@@ -3,4 +3,4 @@ import {
   deployCommandsDevelopment,
 } from "./slash-commands/deploy-commands.js";
 
-deployCommandsDevelopment();
+deployCommands();
