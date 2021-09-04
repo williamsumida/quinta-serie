@@ -5,5 +5,16 @@
   "main": "index.js",
   "repository": "https://github.com/williamsumida/quinta-serie",
   "author": "William <william.h.sumida@gmail.com>",
-  "license": "MIT"
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.22.0",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0"
+  },
+  "scripts": {
+    "start": "node ./src/app.js"
+  }
 }
