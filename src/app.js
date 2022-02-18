@@ -1,21 +1,15 @@
 import { Client, Intents } from "discord.js";
-// import {
-//   deployCommands,
-//   deployCommandsDevelopment,
-// } from "./slash-commands/deploy-commands.js";
-
+import { catchPokemon } from "./slash-commands/pokemon-commands/pokemon/index.js";
 import dotenv from "dotenv/config";
-const { TOKEN, environment_type } = process.env;
 
-// if (environment_type === "production") deployCommands();
-// else deployCommandsDevelopment();
+const { TOKEN, environment_type } = process.env;
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 console.log(Intents.FLAGS);
 
 client.once("ready", () => {
-  console.log("Ready!");
+  console.log("Quinta Serie BOT is Running!");
 });
 
 client.on("interactionCreate", async (interaction) => {
@@ -23,12 +17,10 @@ client.on("interactionCreate", async (interaction) => {
 
   const { commandName } = interaction;
 
-  console.log(interaction);
-
   if (commandName === "alo") {
-    await interaction.reply("teste!");
-  } else if (commandName === "echo") {
-    await interaction.reply("echo");
+    await interaction.reply("alo");
+  } else if (commandName === "pokemon") {
+    await catchPokemon(interaction);
   }
 });
 
