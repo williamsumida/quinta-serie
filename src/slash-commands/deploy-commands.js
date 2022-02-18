@@ -7,7 +7,7 @@ import teste from "./teste/index.js";
 import echo from "./echo/index.js";
 import pokemon from "./pokemon-commands/pokemon/index.js";
 
-const { TOKEN, clientId, guildId } = process.env;
+const { TOKEN, clientId, guildId, guildIdQuintaSerie } = process.env;
 
 const { REST } = pkg;
 
@@ -24,6 +24,13 @@ async function deployCommands() {
     await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
       body: commands,
     });
+
+    await rest.put(
+      Routes.applicationGuildCommands(clientId, guildIdQuintaSerie),
+      {
+        body: commands,
+      }
+    );
 
     console.log(commands);
     console.log("Successfully registered application commands (Production).");
