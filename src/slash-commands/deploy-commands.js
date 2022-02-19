@@ -3,8 +3,6 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import pkg from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 
-import teste from "./teste/index.js";
-import echo from "./echo/index.js";
 import pokemon from "./pokemon-commands/pokemon/index.js";
 
 const { TOKEN, clientId, guildId, guildIdQuintaSerie } = process.env;
