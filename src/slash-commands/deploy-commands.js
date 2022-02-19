@@ -1,19 +1,17 @@
-import dotenv from "dotenv/config";
-import { SlashCommandBuilder } from "@discordjs/builders";
+import "dotenv/config";
 import pkg from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
-
-import pokemon from "./pokemon-commands/pokemon/index.js";
+import pokemonCommand from "./pokemon";
 
 const { TOKEN, clientId, guildId, guildIdQuintaSerie } = process.env;
 
 const { REST } = pkg;
 
-const commands = [pokemon].map((command) => command.toJSON());
+const commands = [pokemonCommand].map((command) => command.toJSON());
 
 const rest = new REST({ version: 9 }).setToken(TOKEN);
 
-async function deployCommands() {
+export async function deployCommands() {
   try {
     await rest.put(Routes.applicationCommands(clientId), {
       body: commands,
@@ -33,7 +31,7 @@ async function deployCommands() {
   }
 }
 
-async function deployCommandsDevelopment() {
+export async function deployCommandsDevelopment() {
   try {
     await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
       body: commands,
@@ -44,5 +42,3 @@ async function deployCommandsDevelopment() {
     console.error(error);
   }
 }
-
-export { deployCommands, deployCommandsDevelopment };

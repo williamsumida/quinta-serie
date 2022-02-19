@@ -1,7 +1,8 @@
 // import { Client } from "pg";
-import dotenv from "dotenv/config";
+import "dotenv/config";
 import pg from "pg";
-const Client = pg.Client;
+// const Client = pg.Client;
+const { Client } = pg;
 
 const config = {
   user: process.env.DB_USER,

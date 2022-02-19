@@ -1,6 +1,6 @@
 import {
   deployCommands,
   deployCommandsDevelopment,
-} from "./slash-commands/deploy-commands.js";
+} from "./slash-commands/deploy-commands";
 
 deployCommands();

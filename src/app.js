@@ -1,8 +1,8 @@
+import "dotenv/config";
 import { Client, Intents } from "discord.js";
-import { catchPokemon } from "./slash-commands/pokemon-commands/pokemon/index.js";
-import dotenv from "dotenv/config";
+import catchPokemon from "./pokemon-commands/pokemon";
 
-const { TOKEN, environment_type } = process.env;
+const { TOKEN } = process.env;
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
@@ -17,10 +17,10 @@ client.on("interactionCreate", async (interaction) => {
 
   const { commandName } = interaction;
 
-  if (commandName === "alo") {
-    await interaction.reply("alo");
-  } else if (commandName === "pokemon") {
+  if (commandName === "pokemon") {
     await catchPokemon(interaction);
+  } else if (commandName === "pokedex") {
+    console.log("pokedex");
   }
 });
 
