@@ -21,9 +21,12 @@ async function deployCommands() {
       body: commands,
     });
 
-    await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-      body: commands,
-    });
+    await rest.put(
+      Routes.applicationGuildCommands(clientId, guildIdQuintaSerie),
+      {
+        body: commands,
+      }
+    );
 
     console.log(commands);
     console.log("Successfully registered application commands (Production).");
