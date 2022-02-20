@@ -10,7 +10,8 @@ const config = {
   database: "pokemon",
   password: process.env.DB_PASSWORD,
 };
-function run(textQuery) {
+
+export function run(textQuery) {
   return new Promise((resolve, reject) => {
     const client = new Client(config);
 
@@ -29,4 +30,21 @@ function run(textQuery) {
   });
 }
 
-export { run };
+export function insert(textQuery, data) {
+  return new Promise((resolve, reject) => {
+    const client = new Client(config);
+
+    client.connect();
+
+    client
+      .query(textQuery, data)
+      .then((res) => {
+        client.end();
+        resolve(res.rows);
+      })
+      .catch((error) => {
+        client.end();
+        reject(error);
+      });
+  });
+}
