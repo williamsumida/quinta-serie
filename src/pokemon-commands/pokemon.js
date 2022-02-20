@@ -44,14 +44,28 @@ async function handlePokemonTrainer(user) {
 }
 
 function isPokeballAvailable(waitTimeInSeconds) {
-  if (waitTimeInSeconds / 60 >= process.env.CATCH_COOLDOWN_IN_MINUTES) {
+  const cooldown = process.env.CATCH_COOLDOWN_IN_MINUTES;
+  if (waitTimeInSeconds / 60 >= cooldown || waitTimeInSeconds <= 5) {
     return true;
   }
 
   return false;
 }
 
-async function sendPokemonMessage(interaction, pokemonTrainer, pokemon) {}
+async function sendPokemonMessage(interaction, pokemonTrainer, pokemon) {
+  const embed = new MessageEmbed()
+    .setColor("#0099FF")
+    .setDescription(
+      `<@${pokemonTrainer.id}>, you've caught a **${capitalize(pokemon.name)}**!
+       Type: ${pokemon.types}
+       Height: ${pokemon.height}
+       Weight: ${pokemon.weight}
+      `
+    )
+    .setImage(pokemon.gif_url);
+
+  await interaction.editReply({ embeds: [embed] });
+}
 
 async function sendCooldownMessage(interaction, user, waitTimeInSeconds) {
   const time = parseHoursMinutesSeconds(waitTimeInSeconds);
@@ -72,39 +86,27 @@ async function sendCooldownMessage(interaction, user, waitTimeInSeconds) {
   }
 
   const parsedWaitTime = hours + minutes + seconds;
-  await interaction.reply(
-    `<@${user.id}> you need to wait another ${parsedWaitTime} before catching another pokemon.`
+  await interaction.editReply(
+    `<@${user.id}> you need to wait another **${parsedWaitTime}** before catching another pokemon.`
   );
 }
 
 export default async function catchPokemon(interaction) {
+  await interaction.deferReply();
   const { user } = interaction;
 
   const pokemonTrainer = await handlePokemonTrainer(user);
 
   // check if trainer can capture a new pokemon
-  const waitTimeInSeconds = getWaitTimeInSeconds(pokemonTrainer);
+  const waitTimeInSeconds = getWaitTimeInSeconds(pokemonTrainer) - 3;
   if (isPokeballAvailable(waitTimeInSeconds)) {
     const pokemonGeneration = await getPokemonGeneration(pokemonTrainer);
 
     const pokemonId = await generateRandomId(pokemonGeneration);
     const pokemon = await getPokemonById(pokemonId);
-
-    // register pokemon to pokedex
-    // parse message
-
-    const embed = new MessageEmbed()
-      .setColor("#0099FF")
-      .setDescription(
-        `<@${user.id}>, you've caught a ${capitalize(pokemon.name)}!
-       Type: ${pokemon.types}
-       height: ${pokemon.height}
-       weight: ${pokemon.weight}
-      `
-      )
-      .setImage(pokemon.gif_url);
-
-    await interaction.reply({ embeds: [embed] });
+    const pokemonRarity = "common";
+    await registerPokemonToPokedex(pokemonTrainer, pokemon, pokemonRarity);
+    await sendPokemonMessage(interaction, pokemonTrainer, pokemon);
   } else {
     await sendCooldownMessage(interaction, user, waitTimeInSeconds);
   }

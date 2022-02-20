@@ -27,7 +27,6 @@ export async function createPokemonTrainer(user) {
   const data = [user.id];
   try {
     await insert(query, data);
-    console.log("created a new trainer");
   } catch (error) {
     console.log(error);
   }
