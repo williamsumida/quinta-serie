@@ -1,5 +1,5 @@
 /* eslint-disable prefer-destructuring */
-import { run, insert } from "./db";
+import { run, insert } from './db';
 
 export async function getPokemonTrainer(user) {
   const { id } = user;
@@ -30,4 +30,15 @@ export async function createPokemonTrainer(user) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function updateLastTimeCaptured(pokemonTrainer) {
+  const { id } = pokemonTrainer;
+  const query = `
+    UPDATE pokemon_trainer
+    SET last_time_captured = now()
+    WHERE id = ${id};
+  `;
+
+  await run(query);
 }

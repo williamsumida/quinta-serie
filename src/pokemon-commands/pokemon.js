@@ -1,23 +1,24 @@
 /* eslint-disable camelcase */
-import "dotenv/config";
-import { MessageEmbed } from "discord.js";
+import 'dotenv/config';
+import { MessageEmbed } from 'discord.js';
 import {
   capitalize,
   generateRandomNumber,
   getWaitTimeInSeconds,
   parseHoursMinutesSeconds,
-} from "../helper-functions";
+} from '../helper-functions';
 
 import {
   getPokemonById,
   getPokemonGeneration,
   registerPokemonToPokedex,
-} from "../database/pokemon";
+} from '../database/pokemon';
 
 import {
   createPokemonTrainer,
   getPokemonTrainer,
-} from "../database/pokemon-trainer";
+  updateLastTimeCaptured,
+} from '../database/pokemon-trainer';
 
 function generateRandomId(generation) {
   if (generation === 1) {
@@ -54,7 +55,7 @@ function isPokeballAvailable(waitTimeInSeconds) {
 
 async function sendPokemonMessage(interaction, pokemonTrainer, pokemon) {
   const embed = new MessageEmbed()
-    .setColor("#0099FF")
+    .setColor('#0099FF')
     .setDescription(
       `<@${pokemonTrainer.id}>, you've caught a **${capitalize(pokemon.name)}**!
        Type: ${pokemon.types}
@@ -69,9 +70,9 @@ async function sendPokemonMessage(interaction, pokemonTrainer, pokemon) {
 
 async function sendCooldownMessage(interaction, user, waitTimeInSeconds) {
   const time = parseHoursMinutesSeconds(waitTimeInSeconds);
-  let hours = "";
-  let minutes = "";
-  let seconds = "";
+  let hours = '';
+  let minutes = '';
+  let seconds = '';
 
   if (time.hours !== 0) {
     hours = `${time.hours} hours `;
@@ -97,15 +98,17 @@ export default async function catchPokemon(interaction) {
 
   const pokemonTrainer = await handlePokemonTrainer(user);
 
-  // check if trainer can capture a new pokemon
   const waitTimeInSeconds = getWaitTimeInSeconds(pokemonTrainer) - 3;
+  console.log(waitTimeInSeconds);
+
   if (isPokeballAvailable(waitTimeInSeconds)) {
     const pokemonGeneration = await getPokemonGeneration(pokemonTrainer);
 
     const pokemonId = await generateRandomId(pokemonGeneration);
     const pokemon = await getPokemonById(pokemonId);
-    const pokemonRarity = "common";
+    const pokemonRarity = 'common';
     await registerPokemonToPokedex(pokemonTrainer, pokemon, pokemonRarity);
+    await updateLastTimeCaptured(pokemonTrainer);
     await sendPokemonMessage(interaction, pokemonTrainer, pokemon);
   } else {
     await sendCooldownMessage(interaction, user, waitTimeInSeconds);
