@@ -5,6 +5,7 @@ import { MessageEmbed } from 'discord.js';
 
 import { getPokemonTrainer } from '../database/pokemon-trainer';
 import { getCaughtPokemons } from '../database/pokedex';
+import { capitalize } from '../helper-functions';
 
 async function pokemonTrainerNotFoundMessage(interaction, user) {
   const embed = new MessageEmbed().setDescription(
@@ -18,7 +19,10 @@ function parsePokedexMessage(caughtPokemons) {
   let message = '**Caught Pokemons:**\n';
 
   for (const i in caughtPokemons) {
-    message += `**${caughtPokemons[i].name}** ${caughtPokemons[i].count}x\n`;
+    const pokemonName = capitalize(caughtPokemons[i].name);
+    const timesCaught = caughtPokemons[i].count;
+
+    message += `**${pokemonName}** ${timesCaught}x\n`;
 
     if (i > 20) {
       break;
