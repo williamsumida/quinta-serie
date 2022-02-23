@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { Client, Intents } from 'discord.js';
 import catchPokemon from './pokemon-commands/pokemon';
+import pokedex from './pokemon-commands/pokedex';
 
 const { TOKEN } = process.env;
 
@@ -20,7 +21,7 @@ client.on('interactionCreate', async (interaction) => {
   if (commandName === 'pokemon') {
     await catchPokemon(interaction);
   } else if (commandName === 'pokedex') {
-    console.log('pokedex');
+    await pokedex(interaction);
   }
 });
 
