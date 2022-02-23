@@ -15,19 +15,19 @@ async function pokemonTrainerNotFoundMessage(interaction, user) {
 }
 
 function parsePokedexMessage(caughtPokemons) {
-  let message = 'Caught Pokemons:\n';
+  let message = '**Caught Pokemons:**\n';
 
   for (const i in caughtPokemons) {
-    message += `${caughtPokemons[i].name} ${caughtPokemons[i].count}x\n`;
+    message += `**${caughtPokemons[i].name}** ${caughtPokemons[i].count}x\n`;
 
     if (i > 20) {
       break;
     }
   }
 
-  message += `Gen 1: ${caughtPokemons.length}/151\n`;
-  message += `Gen 2: 0/100\n`;
-  message += `Gen 3: 0/135`;
+  message += `\n**Gen 1: ${caughtPokemons.length}/151**\n`;
+  message += `**Gen 2: 0/100**\n`;
+  message += `**Gen 3: 0/135**`;
   return message;
 }
 
