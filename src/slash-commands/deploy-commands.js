@@ -1,13 +1,16 @@
-import "dotenv/config";
-import pkg from "@discordjs/rest";
-import { Routes } from "discord-api-types/v9";
-import pokemonCommand from "./pokemon";
+import 'dotenv/config';
+import pkg from '@discordjs/rest';
+import { Routes } from 'discord-api-types/v9';
+import pokemonCommand from './pokemon';
+import pokedexCommand from './pokedex';
 
 const { TOKEN, clientId, guildId, guildIdQuintaSerie } = process.env;
 
 const { REST } = pkg;
 
-const commands = [pokemonCommand].map((command) => command.toJSON());
+const commands = [pokemonCommand, pokedexCommand].map((command) =>
+  command.toJSON()
+);
 
 const rest = new REST({ version: 9 }).setToken(TOKEN);
 
@@ -25,7 +28,7 @@ export async function deployCommands() {
     );
 
     console.log(commands);
-    console.log("Successfully registered application commands (Production).");
+    console.log('Successfully registered application commands (Production).');
   } catch (error) {
     console.error(error);
   }
@@ -37,7 +40,7 @@ export async function deployCommandsDevelopment() {
       body: commands,
     });
 
-    console.log("Successfully registered application commands (Develoment).");
+    console.log('Successfully registered application commands (Develoment).');
   } catch (error) {
     console.error(error);
   }

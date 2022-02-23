@@ -1,7 +1,7 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
+import { SlashCommandBuilder } from '@discordjs/builders';
 
 const command = new SlashCommandBuilder()
-  .setName("pokedex")
-  .setDescription("List all captured Pokemons");
+  .setName('pokedex')
+  .setDescription('List all captured Pokemons');
 
 export default command;

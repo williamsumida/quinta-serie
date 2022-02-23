@@ -22,9 +22,9 @@ export function parseHoursMinutesSeconds(timeInSeconds) {
 
   remainingSeconds = cooldown - remainingSeconds;
   const time = {
-    hours: "",
-    minutes: "",
-    seconds: "",
+    hours: '',
+    minutes: '',
+    seconds: '',
   };
 
   time.hours = Math.floor(remainingSeconds / 3600);

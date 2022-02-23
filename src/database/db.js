@@ -1,13 +1,13 @@
 // import { Client } from "pg";
-import "dotenv/config";
-import pg from "pg";
+import 'dotenv/config';
+import pg from 'pg';
 // const Client = pg.Client;
 const { Client } = pg;
 
 const config = {
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
-  database: "pokemon",
+  database: 'pokemon',
   password: process.env.DB_PASSWORD,
 };
 

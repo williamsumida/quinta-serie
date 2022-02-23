@@ -1,4 +1,4 @@
-import { run, insert } from "./db";
+import { run, insert } from './db';
 
 export async function getPokemonById(id) {
   const query = `
