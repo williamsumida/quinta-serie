@@ -1,5 +1,4 @@
 from tkinter import W
-import dotenv
 import requests
 import psycopg2
 import pprint as pp
