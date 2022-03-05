@@ -11,7 +11,7 @@ Capture a Pokemon.
 
 - [x] Save captured pokemon to pokedex
 - [ ] Let user capture 2nd gen pokemons if 1st gen pokedex is completed
-- [ ] List Pokedex
+- [x] List Pokedex
 - [x] /pokemon command cooldown
 - [ ] Capture shiny pokemons
 - [ ] Add 2rd Gen (Include all unowns)
